@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vue/reactivity-transform": "^3.3.13",
     "core-js": "^3.39.0",
     "regenerator-runtime": "^0.14.1",
     "vue": "^3.2.25"
