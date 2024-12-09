@@ -4,23 +4,25 @@ import legacy from '@vitejs/plugin-legacy'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // works on both development and production build environments
-  esbuild: {
-    // configure this value when the browser version of the development environment is lower
-    // minimum support es2015
-    // https://esbuild.github.io/api/#target
-    target: 'es2015',
-  },
-  // for production build environments only
   build: {
-    // minimum support es2015
-    target: 'es2015',
+    target: ['es2015'], // Поддержка iOS 9 (Safari 9)
+    minify: 'terser', // Минимизатор Terser
+    terserOptions: {
+      ecma: 5, // Поддержка старых браузеров
+      compress: {
+        drop_console: true, // Удалить все console.log
+        drop_debugger: true // Удалить все debugger
+      },
+      output: {
+        comments: false, // Удалить все комментарии
+      }
+    }
   },
   base: './',
   plugins: [
       vue(),
     legacy({
-      targets: ['ios_saf 9'],
+      targets: ['iOS >= 9'],
       renderLegacyChunks: true,
       modernPolyfills: true,
     }),
