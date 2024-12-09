@@ -20,7 +20,7 @@ export default defineConfig({
   plugins: [
       vue(),
     legacy({
-      targets: ['chrome >= 50'],
+      targets: ['ios_saf 9'],
       renderLegacyChunks: true,
       modernPolyfills: true,
     }),
