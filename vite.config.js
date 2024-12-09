@@ -1,30 +1,33 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import legacy from '@vitejs/plugin-legacy'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import legacy from '@vitejs/plugin-legacy';
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    target: ['es2015'], // Поддержка iOS 9 (Safari 9)
-    minify: 'terser', // Минимизатор Terser
-    terserOptions: {
-      ecma: 5, // Поддержка старых браузеров
-      compress: {
-        drop_console: true, // Удалить все console.log
-        drop_debugger: true // Удалить все debugger
-      },
-      output: {
-        comments: false, // Удалить все комментарии
-      }
-    }
+  // works on both development and production build environments
+  esbuild: {
+    // configure this value when the browser version of the development environment is lower
+    // minimum support es2015
+    // https://esbuild.github.io/api/#target
+    target: 'es2015',
   },
-  base: './',
+  // for production build environments only
+  build: {
+    // minimum support es2015
+    target: 'es2015',
+  },
   plugins: [
-      vue(),
+    vue(),
+    // for production build environments only
     legacy({
+      /**
+       * 1. try changing these values
+       * 2. run `pnpm build`, see the output files in dist directory
+       * 3. run `pnpm preview`, see the actual loaded files in different versions of browsers
+       */
       targets: ['iOS >= 9'],
       renderLegacyChunks: true,
       modernPolyfills: true,
     }),
   ],
-})
+});
