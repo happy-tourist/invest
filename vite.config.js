@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
       vue(),
     legacy({
-      targets: ['iOS 9'], // Таргетируем iOS 9
+      targets: ['iOS 4'], // Таргетируем iOS 9
       modernPolyfills: true, // Включаем современные полифиллы
     }),
   ],
