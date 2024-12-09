@@ -5,17 +5,27 @@ import legacy from '@vitejs/plugin-legacy';
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  // works on both development and production build environments
-  esbuild: {
-    // configure this value when the browser version of the development environment is lower
-    // minimum support es2015
-    // https://esbuild.github.io/api/#target
-    target: 'es2015',
-  },
   // for production build environments only
   build: {
-    target: ['es2015'], // Указываем, что таргетируем ES5/ES6 совместимость
-    polyfillDynamicImport: true // Динамические импорты
+    target: 'es2015',
+    polyfillDynamicImport: true,
+    rollupOptions: {
+      output: {
+        format: 'iife', // Используем IIFE для лучшей поддержки устаревших браузеров
+      }
+    },
+    sourcemap: true,
+    minify: 'terser', // Используем terser вместо esbuild
+    terserOptions: {
+      ecma: 5, // Преобразуем до ES5 для совместимости с iOS 9.3.6
+      compress: {
+        drop_console: true, // Убираем console.log
+        drop_debugger: true // Убираем debugger
+      },
+      output: {
+        comments: false // Удаляем комментарии
+      }
+    }
   },
   plugins: [
     vue(),
