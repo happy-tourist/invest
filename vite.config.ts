@@ -28,7 +28,9 @@ export default defineConfig({
     }
   },
   plugins: [
-    vue(),
+    vue({
+      reactivityTransform: true,  // Включаем reactivity-transform
+    }),
     // for production build environments only
     legacy({
       /**
