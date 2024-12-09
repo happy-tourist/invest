@@ -1,33 +1,51 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // Плагин для работы с HTML
+const { VueLoaderPlugin } = require('vue-loader');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js', // Входной файл
-    output: {
-        path: path.resolve(__dirname, 'dist'), // Путь для сборки
-        filename: 'bundle.js', // Имя выходного файла
-        publicPath: './' // Базовый путь для GitHub Pages (очень важно для вложенных репозиториев)
+  mode: 'development',  // Устанавливаем режим разработки
+  entry: './src/main.js',  // Входная точка
+  output: {
+    path: path.resolve(__dirname, 'dist'),  // Папка, куда будут собраны файлы
+    filename: 'bundle.js',  // Имя итогового файла
+    publicPath: './',  // Корневой путь для статичных файлов
+  },
+  resolve: {
+    alias: {
+      vue: '@vue/runtime-dom',  // Прокси для Vue 3
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/, // Обрабатываем все .js файлы
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            }
-        ]
-    },
-    devServer: {
-        static: path.resolve(__dirname, 'dist'), // Указываем статику
-        port: 3000, // Порт для dev-сервера
-        open: true // Открываем браузер автоматически
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './index.html', // Копируем index.html
-            filename: 'index.html' // Имя для выходного файла
-        })
-    ]
+    extensions: ['.js', '.vue'],  // Расширения для импортируемых файлов
+  },
+  devServer: {
+    static: path.join(__dirname, 'dist'),  // Папка для статики
+    port: 8080,  // Порт сервера
+    historyApiFallback: true,  // Нужно для корректной работы SPA
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,  // Обработка .vue файлов
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.js$/,  // Обработка .js файлов
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',  // Используем Babel для транспиляции JS
+        },
+      },
+      {
+        test: /\.css$/,  // Обработка .css файлов
+        use: ['vue-style-loader', 'css-loader'],  // Для CSS в Vue компонентах
+      },
+    ],
+  },
+  plugins: [
+    new VueLoaderPlugin(),  // Плагин для обработки Vue файлов
+    new HtmlWebpackPlugin({
+      template: './src/index.html',  // Шаблон для HTML страницы
+    }),
+    new CleanWebpackPlugin(),  // Очищает старые файлы в папке dist перед новой сборкой
+  ],
 };
