@@ -10,12 +10,17 @@ export default defineConfig({
     // configure this value when the browser version of the development environment is lower
     // minimum support es2015
     // https://esbuild.github.io/api/#target
-    target: 'es2015',
+    target: 'es5',
   },
   // for production build environments only
   build: {
-    target: ['es2015'], // Указываем, что таргетируем ES5/ES6 совместимость
-    polyfillDynamicImport: true // Динамические импорты
+    target: 'es5',
+    polyfillDynamicImport: true,
+    rollupOptions: {
+      output: {
+        format: 'iife', // Используем IIFE для лучшей поддержки устаревших браузеров
+      }
+    }
   },
   plugins: [
     vue(),
