@@ -14,8 +14,8 @@ export default defineConfig({
   },
   // for production build environments only
   build: {
-    // minimum support es2015
-    target: 'es2015',
+    target: ['es2015'], // Указываем, что таргетируем ES5/ES6 совместимость
+    polyfillDynamicImport: true // Динамические импорты
   },
   plugins: [
     vue(),
@@ -26,7 +26,8 @@ export default defineConfig({
        * 2. run `pnpm build`, see the output files in dist directory
        * 3. run `pnpm preview`, see the actual loaded files in different versions of browsers
        */
-      targets: ['iOS >= 9'],
+      targets: ['defaults', 'not IE 11', 'iOS >= 9'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // Для async/await
       renderLegacyChunks: true,
       modernPolyfills: true,
     }),
