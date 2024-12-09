@@ -4,8 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // Плагин для
 module.exports = {
     entry: './src/index.js', // Входной файл
     output: {
-        path: path.resolve(__dirname, 'dist'), // Сборка в папку dist
-        filename: 'bundle.js' // Имя файла сборки
+        path: path.resolve(__dirname, 'dist'), // Путь для сборки
+        filename: 'bundle.js', // Имя выходного файла
+        publicPath: './' // Базовый путь для GitHub Pages (очень важно для вложенных репозиториев)
     },
     module: {
         rules: [
@@ -19,13 +20,13 @@ module.exports = {
         ]
     },
     devServer: {
-        static: path.resolve(__dirname, 'dist'), // Указываем статику в dist
-        port: 3001, // Порт для dev-сервера
-        open: true // Открывать браузер автоматически
+        static: path.resolve(__dirname, 'dist'), // Указываем статику
+        port: 3000, // Порт для dev-сервера
+        open: true // Открываем браузер автоматически
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html', // Указываем откуда копировать index.html
+            template: './index.html', // Копируем index.html
             filename: 'index.html' // Имя для выходного файла
         })
     ]
