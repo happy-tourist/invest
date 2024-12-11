@@ -1,13 +1,11 @@
-import 'core-js/stable'; // Полностью включает все полифиллы
-import 'regenerator-runtime/runtime'; // Полифилл для async/await
-
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { PrimeReactProvider } from 'primereact/api';
 import './index.css'
 import App from './App.jsx'
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <PrimeReactProvider>
     <App />
-  </StrictMode>,
+  </PrimeReactProvider>,
 )
