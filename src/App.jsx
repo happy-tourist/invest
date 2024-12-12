@@ -3,12 +3,11 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { auth } from './firebase';
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 
 function App() {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        onAuthStateChanged(auth, (currentUser) => {
+        auth.onAuthStateChanged((currentUser) => {
             setUser(currentUser);
         });
     }, [])
@@ -16,8 +15,8 @@ function App() {
     const [count, setCount] = useState(0)
 
     const handleLoginWithGoogle = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider);
+        const provider = new auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider);
     };
 
     return (
