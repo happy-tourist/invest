@@ -5,9 +5,19 @@ import legacy from '@vitejs/plugin-legacy'
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
+  optimizeDeps: {
+    include: [
+      'firebase/app',
+      'firebase/auth',
+      'firebase/firestore',
+      'firebase/storage',
+      'regenerator-runtime/runtime',
+      'core-js/stable',
+    ]
+  },
   // for production build environments only
   build: {
-    target: 'es2015',
+    target: 'es5',
     polyfillDynamicImport: true,
     rollupOptions: {
       output: {
