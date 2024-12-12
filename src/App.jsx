@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import firebase from 'firebase/app';
 import { auth } from './firebase';
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
     const [count, setCount] = useState(0)
 
     const handleLoginWithGoogle = () => {
-        const provider = new auth.GoogleAuthProvider();
+        const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider);
     };
 
