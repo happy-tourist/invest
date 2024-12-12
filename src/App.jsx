@@ -8,16 +8,20 @@ import { auth } from './firebase';
 function App() {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        auth.onAuthStateChanged((currentUser) => {
-            setUser(currentUser);
-        });
+        auth.getRedirectResult()
+            .then(result => {
+                console.log('result', result)
+                if (result.user) {
+                    setUser(result.user);
+                }
+            })
     }, [])
 
     const [count, setCount] = useState(0)
 
     const handleLoginWithGoogle = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider);
+        auth.signInWithRedirect(provider);
     };
 
     return (
