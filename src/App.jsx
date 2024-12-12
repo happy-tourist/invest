@@ -3,12 +3,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { auth } from './firebase';
-import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 
 function App() {
+    const [user, setUser] = useState(null);
     useEffect(() => {
-        getRedirectResult(auth).then((result) => {
-            console.log('result', result)
+        onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
         });
     }, [])
 
@@ -43,6 +44,7 @@ function App() {
             </p>
 
             <button onClick={handleLoginWithGoogle}>Войти через Google</button>
+            {user ? <span>{user.displayName}</span> : <span>No</span>}
         </>
     )
 }
