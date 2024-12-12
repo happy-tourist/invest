@@ -13,6 +13,17 @@ export default defineConfig({
       output: {
         format: 'iife', // Используем IIFE для лучшей поддержки устаревших браузеров
       }
+    },
+    minify: 'terser', // Используем terser вместо esbuild
+    terserOptions: {
+      ecma: 5, // Преобразуем до ES5 для совместимости с iOS 9.3.6
+      compress: {
+        drop_console: true, // Убираем console.log
+        drop_debugger: true // Убираем debugger
+      },
+      output: {
+        comments: false // Удаляем комментарии
+      }
     }
   },
   plugins: [
