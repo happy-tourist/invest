@@ -18,9 +18,12 @@ function App() {
     const [count, setCount] = useState(0)
 
     const handleLoginWithGoogle = () => {
+        alert('handleLoginWithGoogle1')
         try {
             const provider = new firebase.auth.GoogleAuthProvider();
+            alert('handleLoginWithGoogle2')
             auth.signInWithPopup(provider);
+            alert('handleLoginWithGoogle3')
         } catch (error) {
             alert('Ошибка: ' + error.message)
         }
