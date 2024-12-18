@@ -6,22 +6,24 @@ import firebase from 'firebase/app';
 import { auth } from './firebase';
 
 function App() {
+    alert('start')
     const [user, setUser] = useState(null);
     useEffect(() => {
-        auth.getRedirectResult()
-            .then(result => {
-                console.log('result', result)
-                if (result.user) {
-                    setUser(result.user);
-                }
-            })
+        auth.onAuthStateChanged((currentUser) => {
+            setUser(currentUser);
+        });
     }, [])
+
 
     const [count, setCount] = useState(0)
 
     const handleLoginWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider);
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider);
+        } catch (error) {
+            alert('Ошибка: ' + error.message)
+        }
     };
 
     return (
