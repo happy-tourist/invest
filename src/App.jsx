@@ -22,7 +22,11 @@ function App() {
         try {
             const provider = new firebase.auth.GoogleAuthProvider();
             alert('handleLoginWithGoogle2')
-            auth.signInWithPopup(provider);
+            auth.signInWithPopup(provider).then((xxx) => {
+                alert('result: ' + xxx)
+            }).catch((error) => {
+                alert('Ошибка: ' + error.message)
+            });
             alert('handleLoginWithGoogle3')
         } catch (error) {
             alert('Ошибка: ' + error.message)
